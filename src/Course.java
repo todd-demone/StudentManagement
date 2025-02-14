@@ -35,30 +35,26 @@ public class Course {
     // i.e., to keep the data sorted. While another variable would be better off using hash tables (faster lookup?).
     // (2) It also makes the code more maintainable, since if you want to change the code in the future, all you have
     // to do is change the IMPLEMENTATION and everything will still work.
-    private Set<Student> enrolledStudents;
+    private Set<Enrollment> enrollments;
 
     public Course(String courseName, String courseCode) {
         this.courseName = courseName;
         this.courseCode = courseCode;
-        this.enrolledStudents = new HashSet<>();
+        this.enrollments = new HashSet<>();
     }
 
-    public String enrollStudent(Student student) {
-        // Note: is there any advantage of this check if enrolledStudents is a Set type (no duplicates)?
-        boolean added = this.enrolledStudents.contains(student);
+    public String addEnrollment(Enrollment enrollment) {
+        // Note: is there any advantage of this check if enrollments is a Set type (no duplicates)?
+        boolean added = this.enrollments.contains(enrollment);
         if (added) {
-            return student + " is already enrolled in " + this.courseName + " (" + this.courseCode + ").";
+            return enrollment + " is already enrolled in " + this.courseName + " (" + this.courseCode + ").";
         } else {
-            this.enrolledStudents.add(student);
-            return student + " has enrolled in " + this.courseName + " (" + this.courseCode + ").";
+            this.enrollments.add(enrollment);
+            return enrollment + " has been add to " + this.courseName + " (" + this.courseCode + ").";
         }
     }
 
-    public String toString() {
-        return this.courseName + " (" + this.courseCode + ")";
-    }
-
-    // Getter - getEnrolledStudents()
+    // Getter - getEnrollments()
     // Encapsulation
     // Why encapsulation? why not just allow access and modification directly from other parts of code?
     // (1) control & validation - you can put constraints in setters - aka validators - before data is modified/added.
@@ -71,9 +67,13 @@ public class Course {
     // e.g., an object that holds passwords wants to control access - wants to make sure passwords are encrypted
     // (4) data corruption - a 3rd party object could accidentally modify the data; encapsulation prevents direct access
     // to data so inadvertent modifications are stopped.
-    public HashSet<Student> getEnrolledStudents() {
+    public HashSet<Enrollment> getEnrollments() {
         // We don't pass the original enrolledStudents HashSet because the recipient could then modify the original.
         // It's better to pass a copy to avoid
-        return new HashSet<>(this.enrolledStudents);
+        return new HashSet<>(this.enrollments);
+    }
+
+    public String toString() {
+        return this.courseName + " (" + this.courseCode + ")";
     }
 }
