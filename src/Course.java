@@ -43,15 +43,15 @@ public class Course {
         this.enrollments = new HashSet<>();
     }
 
-    public String addEnrollment(Enrollment enrollment) {
+    public void addEnrollment(Enrollment enrollment) {
         // Note: is there any advantage of this check if enrollments is a Set type (no duplicates)?
-        boolean added = this.enrollments.contains(enrollment);
-        if (added) {
-            return enrollment + " is already enrolled in " + this.courseName + " (" + this.courseCode + ").";
-        } else {
+//        boolean added = this.enrollments.contains(enrollment);
+//        if (added) {
+//            return enrollment + " is already enrolled in " + this.courseName + " (" + this.courseCode + ").";
+//        } else {
             this.enrollments.add(enrollment);
-            return enrollment + " has been add to " + this.courseName + " (" + this.courseCode + ").";
-        }
+//            return enrollment + " has been add to " + this.courseName + " (" + this.courseCode + ").";
+//        }
     }
 
     // Getter - getEnrollments()
