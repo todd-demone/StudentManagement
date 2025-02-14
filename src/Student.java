@@ -1,31 +1,40 @@
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Student {
 
     private String name;
     private int id;
-    private ArrayList<Course> courses;
+    private Set<Course> courses;
 
     public Student(String name, int id) {
         this.name = name;
         this.id = id;
-        this.courses = new ArrayList<>();
+        this.courses = new HashSet<>();
     }
 
-    public String getName() {
-        return this.name;
+    public String toString() {
+        return name + " (ID: " + this.id + ")";
     }
 
-    public void addCourse(Course course) {
-        courses.add(course);
-        System.out.printf("%s has been added to %s's course list.%n", course.display(), this.name);
-    }
-
-    public void displayCourses() {
-        System.out.printf("%s's Courses for this year:%n", this.name);
-        for (Course course: courses) {
-            System.out.printf("- %s%n", course.display());
+    public String addCourse(Course course) {
+        boolean added = this.courses.contains(course);
+        if (added) {
+            return "Error: " + course + " has already been added to " + this.name + "'s course list.";
+        } else {
+            this.courses.add(course);
+            return course + "added to " + this.name + "'s course list.";
         }
-        System.out.println();
+    }
+
+//    public void displayCourses() {
+//        System.out.printf("%s's Courses for this year:%n", this.name);
+//        for (Course course: courses) {
+//            System.out.printf("- %s%n", course);
+//        }
+//        System.out.println();
+//    }
+    public Set<Course> getCourseList() {
+        return new HashSet<>(this.courses); // returns a copy of the HashSet
     }
 }

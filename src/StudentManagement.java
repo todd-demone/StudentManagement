@@ -9,25 +9,37 @@ public class StudentManagement {
         Student jordan = new Student("Jordan Wilbon", 456789);
 
         StudentManagement manager = new StudentManagement();
-        manager.completeCourseAdmin(jack, biology);
-        manager.completeCourseAdmin(jack, calculus);
-        manager.completeCourseAdmin(michelle, calculus);
-        manager.completeCourseAdmin(jordan, food);
-        manager.completeCourseAdmin(jordan, biology);
-        manager.completeCourseAdmin(jordan, calculus);
+        manager.enrollStudentInCourse(jack, biology);
+        manager.enrollStudentInCourse(jack, calculus);
+        manager.enrollStudentInCourse(michelle, calculus);
+        manager.enrollStudentInCourse(jordan, food);
+        manager.enrollStudentInCourse(jordan, biology);
+        manager.enrollStudentInCourse(jordan, calculus);
 
-        jack.displayCourses();
-        michelle.displayCourses();
-        jordan.displayCourses();
+        System.out.println("Jack's course list:");
+        for (Course course : jack.getCourseList()) {
+            System.out.println("- " + course);
+        }
 
-        biology.listStudents();
-        food.listStudents();
-        calculus.listStudents();
+        System.out.println("Michelle's course list:");
+        for (Course course : michelle.getCourseList()) {
+            System.out.println("- " + course);
+        }
+
+        System.out.println("Jordan's course list:");
+        for (Course course : jordan.getCourseList()) {
+            System.out.println("- " + course);
+        }
+
+        System.out.println(biology.getEnrolledStudents());
+        System.out.println(food.getEnrolledStudents());
+        System.out.println(calculus.getEnrolledStudents());
     }
 
-    public void completeCourseAdmin(Student student, Course course) {
-        course.enrollStudent(student);
-        student.addCourse(course);
-        System.out.println();
+    public void enrollStudentInCourse(Student student, Course course) {
+        String enrollmentMessage = course.enrollStudent(student);
+        String courseMessage = student.addCourse(course);
+        System.out.println(enrollmentMessage);
+        System.out.println(courseMessage);
     }
 }
