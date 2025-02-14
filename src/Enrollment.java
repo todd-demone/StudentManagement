@@ -9,12 +9,20 @@ public class Enrollment {
         this.student = student;
     }
 
+    public void addGrade(int grade) {
+        this.grade = grade;
+    }
+
     public Course getCourse() {
         return this.course;
     }
 
     public Student getStudent() {
         return this.student;
+    }
+
+    public int getGrade() {
+        return this.grade;
     }
 
     public String toString() {
