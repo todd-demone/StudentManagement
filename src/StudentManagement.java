@@ -1,45 +1,48 @@
 public class StudentManagement {
     public static void main(String[] args) {
-        Course biology = new Course("Biology", "BIO123");
+        Course biology = new Course("Biology", "bio123");
         Course calculus = new Course("Calculus", "MAT145");
         Course food = new Course("Food Preparation", "HEC167");
 
-        Student jack = new Student("Jack Smith", 123456);
-        Student michelle = new Student("Michelle Jones", 789123);
-        Student jordan = new Student("Jordan Wilbon", 456789);
+        Student jack = new Student("Jack Smith", 123456789);
+        Student michelle = new Student("Michelle Jones", 789123456);
+        Student jordan = new Student("Jordan Miller", 456789123);
 
         StudentManagement manager = new StudentManagement();
-        manager.enrollStudentInCourse(jack, biology);
-        manager.enrollStudentInCourse(jack, calculus);
-        manager.enrollStudentInCourse(michelle, calculus);
-        manager.enrollStudentInCourse(jordan, food);
-        manager.enrollStudentInCourse(jordan, biology);
-        manager.enrollStudentInCourse(jordan, calculus);
+        manager.enrollStudentInCourse(biology, jack);
+        manager.enrollStudentInCourse(calculus, jack);
+        manager.enrollStudentInCourse(calculus, michelle);
+        manager.enrollStudentInCourse(food, jordan);
+        manager.enrollStudentInCourse(biology, jordan);
+        manager.enrollStudentInCourse(calculus, jordan);
 
-        System.out.println("Jack's course list:");
-        for (Course course : jack.getCourseList()) {
-            System.out.println("- " + course);
-        }
+//        biology.getEnrollment(jack).getGrade();
+        manager.printEnrolledStudents(biology);
+        manager.printEnrolledStudents(calculus);
+        manager.printEnrolledStudents(food);
 
-        System.out.println("Michelle's course list:");
-        for (Course course : michelle.getCourseList()) {
-            System.out.println("- " + course);
-        }
-
-        System.out.println("Jordan's course list:");
-        for (Course course : jordan.getCourseList()) {
-            System.out.println("- " + course);
-        }
-
-        System.out.println(biology.getEnrolledStudents());
-        System.out.println(food.getEnrolledStudents());
-        System.out.println(calculus.getEnrolledStudents());
+        manager.printEnrollments(jack);
+        manager.printEnrollments(jack);
+        manager.printEnrollments(jack);
     }
 
-    public void enrollStudentInCourse(Student student, Course course) {
-        String enrollmentMessage = course.enrollStudent(student);
-        String courseMessage = student.addCourse(course);
-        System.out.println(enrollmentMessage);
-        System.out.println(courseMessage);
+    private void enrollStudentInCourse(Course course, Student student) {
+        Enrollment enrollment = new Enrollment(course, student);
+        course.addEnrollment(enrollment);
+        student.addEnrollment(enrollment);
+    }
+
+    private void printEnrolledStudents(Course course) {
+        System.out.println(course + "Enrolled students:");
+        for (Enrollment enrollment : course.getEnrollments()) {
+            System.out.println("- " + enrollment.getStudent());
+        }
+    }
+
+    private void printEnrollments(Student student) {
+        System.out.println(student + "Course List:");
+        for (Enrollment enrollment : student.getEnrollments()) {
+            System.out.println("- " + enrollment.getCourse());
+        }
     }
 }

@@ -1,40 +1,54 @@
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Student {
 
     private String name;
-    private int id;
-    private Set<Course> courses;
+    private Integer id;
+    private Set<Enrollment> enrollments;
 
-    public Student(String name, int id) {
+    public Student(String name, Integer id) {
+        Objects.requireNonNull(name, "Student name cannot be null.");
+        Objects.requireNonNull(id, "Student ID cannot be null.");
+
+        name = name.trim();
+
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Student name cannot be empty.");
+        }
+        if (name.length() > 50) {
+            throw new IllegalArgumentException("Student name must be 50 characters or less.");
+        }
+        if (!name.matches("^[A-Za-z'\\- ]+$")) {
+            throw new IllegalArgumentException("Student name can only contain letters, spaces, hyphens and apostrophes.");
+        }
+
+        if (id <= 0) {
+            throw new IllegalArgumentException("Student ID must be a positive number.");
+        }
+        String idString = String.valueOf(id);
+        if (!idString.matches("^\\d{9}$")) {
+            throw new IllegalArgumentException("Student ID must be exactly 9 digits (e.g., '123456789').");
+        }
+
         this.name = name;
         this.id = id;
-        this.courses = new HashSet<>();
+        enrollments = new HashSet<>();
     }
 
-    public String toString() {
-        return name + " (ID: " + this.id + ")";
-    }
-
-    public String addCourse(Course course) {
-        boolean added = this.courses.contains(course);
-        if (added) {
-            return "Error: " + course + " has already been added to " + this.name + "'s course list.";
-        } else {
-            this.courses.add(course);
-            return course + "added to " + this.name + "'s course list.";
+    public void addEnrollment(Enrollment enrollment) {
+        if (!enrollments.add(enrollment)) {
+            throw new IllegalArgumentException("This enrollment already exists.");
         }
     }
 
-//    public void displayCourses() {
-//        System.out.printf("%s's Courses for this year:%n", this.name);
-//        for (Course course: courses) {
-//            System.out.printf("- %s%n", course);
-//        }
-//        System.out.println();
-//    }
-    public Set<Course> getCourseList() {
-        return new HashSet<>(this.courses); // returns a copy of the HashSet
+    public Set<Enrollment> getEnrollments() {
+        return new HashSet<>(enrollments); // returns a copy of the HashSet
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (ID: %d) - enrolled in %d courses.", name, id, enrollments.size());
     }
 }
