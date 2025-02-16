@@ -1,33 +1,54 @@
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Student {
 
     private String name;
-    private int id;
+    private Integer id;
     private Set<Enrollment> enrollments;
 
-    public Student(String name, int id) {
+    public Student(String name, Integer id) {
+        Objects.requireNonNull(name, "Student name cannot be null.");
+        Objects.requireNonNull(id, "Student ID cannot be null.");
+
+        name = name.trim();
+
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Student name cannot be empty.");
+        }
+        if (name.length() > 50) {
+            throw new IllegalArgumentException("Student name must be 50 characters or less.");
+        }
+        if (!name.matches("^[A-Za-z'\\- ]+$")) {
+            throw new IllegalArgumentException("Student name can only contain letters, spaces, hyphens and apostrophes.");
+        }
+
+        if (id <= 0) {
+            throw new IllegalArgumentException("Student ID must be a positive number.");
+        }
+        String idString = String.valueOf(id);
+        if (!idString.matches("^\\d{9}$")) {
+            throw new IllegalArgumentException("Student ID must be exactly 9 digits (e.g., '123456789').");
+        }
+
         this.name = name;
         this.id = id;
-        this.enrollments = new HashSet<>();
+        enrollments = new HashSet<>();
     }
 
     public void addEnrollment(Enrollment enrollment) {
-//        boolean added = this.enrollments.contains(enrollment);
-//        if (added) {
-//            return "Error: " + enrollment + " has already been added to " + this.name + "'s course enrollments list.";
-//        } else {
-            this.enrollments.add(enrollment);
-//            return enrollment + "added to " + this.name + "'s course enrollments list.";
-//        }
+        if (!enrollments.add(enrollment)) {
+            throw new IllegalArgumentException("This enrollment already exists.");
+        }
     }
 
     public Set<Enrollment> getEnrollments() {
-        return new HashSet<>(this.enrollments); // returns a copy of the HashSet
+        return new HashSet<>(enrollments); // returns a copy of the HashSet
     }
 
+    @Override
     public String toString() {
-        return this.name + " (ID: " + this.id + ")";
+        return String.format("%s (ID: %d) - enrolled in %d courses.", name, id, enrollments.size());
     }
 }

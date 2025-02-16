@@ -1,12 +1,12 @@
 public class StudentManagement {
     public static void main(String[] args) {
-        Course biology = new Course("Biology", "BIO123");
+        Course biology = new Course("Biology", "bio123");
         Course calculus = new Course("Calculus", "MAT145");
         Course food = new Course("Food Preparation", "HEC167");
 
-        Student jack = new Student("Jack Smith", 123456);
-        Student michelle = new Student("Michelle Jones", 789123);
-        Student jordan = new Student("Jordan Wilbon", 456789);
+        Student jack = new Student("Jack Smith", 123456789);
+        Student michelle = new Student("Michelle Jones", 789123456);
+        Student jordan = new Student("Jordan Miller", 456789123);
 
         StudentManagement manager = new StudentManagement();
         manager.enrollStudentInCourse(biology, jack);
@@ -16,41 +16,33 @@ public class StudentManagement {
         manager.enrollStudentInCourse(biology, jordan);
         manager.enrollStudentInCourse(calculus, jordan);
 
-        System.out.println("Jack's course list:");
-        for (Enrollment enrollment : jack.getEnrollments()) {
-            System.out.println("- " + enrollment.getCourse());
-        }
+//        biology.getEnrollment(jack).getGrade();
+        manager.printEnrolledStudents(biology);
+        manager.printEnrolledStudents(calculus);
+        manager.printEnrolledStudents(food);
 
-        System.out.println("Michelle's course list:");
-        for (Enrollment enrollment : michelle.getEnrollments()) {
-            System.out.println("- " + enrollment.getCourse());
-        }
-
-        System.out.println("Jordan's course list:");
-        for (Enrollment enrollment : jordan.getEnrollments()) {
-            System.out.println("- " + enrollment.getCourse());
-        }
-
-        System.out.println("Biology: Enrolled students:");
-        for (Enrollment enrollment : biology.getEnrollments()) {
-            System.out.println("- " + enrollment.getStudent());
-        }
-
-        System.out.println("Calculus: Enrolled students:");
-        for (Enrollment enrollment : calculus.getEnrollments()) {
-            System.out.println("- " + enrollment.getStudent());
-        }
-
-        System.out.println("Food Prep: Enrolled students:");
-        for (Enrollment enrollment : food.getEnrollments()) {
-            System.out.println("- " + enrollment.getStudent());
-        }
-
+        manager.printEnrollments(jack);
+        manager.printEnrollments(jack);
+        manager.printEnrollments(jack);
     }
 
-    public void enrollStudentInCourse(Course course, Student student) {
+    private void enrollStudentInCourse(Course course, Student student) {
         Enrollment enrollment = new Enrollment(course, student);
         course.addEnrollment(enrollment);
         student.addEnrollment(enrollment);
+    }
+
+    private void printEnrolledStudents(Course course) {
+        System.out.println(course + "Enrolled students:");
+        for (Enrollment enrollment : course.getEnrollments()) {
+            System.out.println("- " + enrollment.getStudent());
+        }
+    }
+
+    private void printEnrollments(Student student) {
+        System.out.println(student + "Course List:");
+        for (Enrollment enrollment : student.getEnrollments()) {
+            System.out.println("- " + enrollment.getCourse());
+        }
     }
 }
