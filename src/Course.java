@@ -35,6 +35,12 @@ public class Course {
         enrollments = new HashSet<>();
     }
 
+    public String getCourseCode() { return courseCode; }
+    public String getCourseName() { return courseName; }
+    public Set<Enrollment> getEnrollments() {
+        return new HashSet<>(enrollments);
+    }
+
     public void addEnrollment(Enrollment enrollment) {
         if (!enrollments.add(enrollment)) {
             throw new IllegalArgumentException("This enrollment already exists.");
@@ -45,9 +51,7 @@ public class Course {
 //        return enrollments["student"] == "jack";
 //    }
 
-    public Set<Enrollment> getEnrollments() {
-        return new HashSet<>(enrollments);
-    }
+
 
     @Override
     public String toString() {

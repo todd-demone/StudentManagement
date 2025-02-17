@@ -14,20 +14,19 @@ public class Enrollment {
         this.student = student;
     }
 
-    public void addGrade(int grade) {
-        this.grade = grade;
-    }
 
     public Course getCourse() {
         return course;
     }
-
     public Student getStudent() {
         return student;
     }
-
     public int getGrade() {
         return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     // Override equals and hashCode to compare enrollments by course and student

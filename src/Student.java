@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Student {
 
-    private String name;
-    private Integer id;
+    private final String name;
+    private final Integer id;
     private Set<Enrollment> enrollments;
 
     public Student(String name, Integer id) {
@@ -37,14 +37,14 @@ public class Student {
         enrollments = new HashSet<>();
     }
 
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public Set<Enrollment> getEnrollments() { return new HashSet<>(enrollments); }
+
     public void addEnrollment(Enrollment enrollment) {
         if (!enrollments.add(enrollment)) {
             throw new IllegalArgumentException("This enrollment already exists.");
         }
-    }
-
-    public Set<Enrollment> getEnrollments() {
-        return new HashSet<>(enrollments); // returns a copy of the HashSet
     }
 
     @Override
