@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -18,9 +19,7 @@ public class StudentManagement {
             System.out.println("7 - Exit the program");
             System.out.print("Enter your choice: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
+            int choice = readInt("Enter your choice: ");
             System.out.println();
 
             switch (choice) {
@@ -40,12 +39,11 @@ public class StudentManagement {
     }
 
     private static void addCourse() {
-        System.out.print("Enter the course name: ");
-        String courseName = scanner.nextLine();
-        System.out.print("Enter the course code: ");
-        String courseCode = scanner.nextLine();
+        String courseName = readString("Enter the course name: ");
+        String courseCode = readString("Enter the course code: ");
 
         try {
+            courseCode = courseCode.trim().toUpperCase();
             manager.addCourse(new Course(courseName, courseCode));
         } catch(IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
@@ -53,11 +51,8 @@ public class StudentManagement {
     }
 
     private static void addStudent() {
-        System.out.print("Enter the student's name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter the student's ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+        String name = readString("Enter the student's name: ");
+        int id = readInt("Enter the student's ID: ");
 
         try {
             manager.addStudent(new Student(name, id));
@@ -67,11 +62,8 @@ public class StudentManagement {
     }
 
     private static void enrollStudent() {
-        System.out.print("Enter course code: ");
-        String courseCode = scanner.nextLine();
-        System.out.print("Enter student ID: ");
-        int studentId = scanner.nextInt();
-        scanner.nextLine();
+        String courseCode = readString("Enter course code: ");
+        int studentId = readInt("Enter student ID: ");
 
         try {
             manager.enrollStudent(courseCode, studentId);
@@ -81,11 +73,8 @@ public class StudentManagement {
     }
 
     private static void setGrade() {
-        System.out.print("Enter course code: ");
-        String courseCode = scanner.nextLine();
-        System.out.print("Enter student ID: ");
-        int studentId = scanner.nextInt();
-        scanner.nextLine();
+        String courseCode = readString("Enter course code: ");
+        int studentId = readInt("Enter student ID: ");
 
         try {
             manager.setGrade(courseCode, studentId);
@@ -95,9 +84,7 @@ public class StudentManagement {
     }
 
     private static void listCourses() {
-        System.out.print("Enter student ID: ");
-        int studentId = scanner.nextInt();
-        scanner.nextLine();
+        int studentId = readInt("Enter student ID: ");
 
         try {
             Student student = manager.getStudent(studentId);
@@ -113,8 +100,7 @@ public class StudentManagement {
     }
 
     private static void listStudents() {
-        System.out.print("Enter course code: ");
-        String courseCode = scanner.nextLine();
+        String courseCode = readString("Enter course code: ");
 
         try {
             Course course = manager.getCourse(courseCode);
@@ -126,5 +112,39 @@ public class StudentManagement {
         } catch(IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    private static int readInt(String prompt) {
+        int result = 0;
+        while (true) {
+            System.out.println(prompt);
+            try {
+                result = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter an integer.");
+                // If invalid input was placed in the input buffer by scanner.nextInt() (see above), we need
+                // scanner.nextLine() to discard that input from the buffer. Otherwise, the input stays there and the
+                // loop keeps seeing invalid input and keeps looping indefinitely.
+                scanner.nextLine();
+            }
+        }
+        return result;
+    }
+
+    private static String readString(String prompt) {
+        String result = "";
+        while (true) {
+            System.out.println(prompt);
+            try {
+                result = scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a string.");
+                scanner.nextLine();
+            }
+        }
+        return result;
     }
 }

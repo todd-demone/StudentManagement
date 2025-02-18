@@ -4,6 +4,13 @@ public class StudentManager {
     private final Map<Integer, Student> students = new HashMap<>();
     private final Map<String, Course> courses = new HashMap<>();
 
+    public Student getStudent(int studentId) { return students.get(studentId); }
+
+    public Course getCourse(String courseCode) {
+        courseCode = convertToUpperCase(courseCode);
+        return courses.get(courseCode);
+    }
+
     public void addStudent(Student student) {
         if (students.containsKey(student.getId())) {
             throw new IllegalArgumentException("Student with this ID already exists.");
@@ -23,6 +30,7 @@ public class StudentManager {
     }
 
     public void enrollStudent(String courseCode, int studentId) {
+        courseCode = convertToUpperCase(courseCode);
         Course course = courses.get(courseCode);
         Student student = students.get(studentId);
 
@@ -35,6 +43,7 @@ public class StudentManager {
     }
 
     public void setGrade(String courseCode, int studentId) {
+        courseCode = convertToUpperCase(courseCode);
         Course course = courses.get(courseCode);
         Student student = students.get(studentId);
 
@@ -43,16 +52,7 @@ public class StudentManager {
 
     }
 
-//    public Set<Enrollment> getEnrollmentsStudent(int studentId) {
-//        Student student = students.get(studentId);
-//        return student.getEnrollments();
-//    }
-//
-//    public Set<Enrollment> getEnrollmentsCourse(String courseCode) {
-//       Course course = courses.get(courseCode);
-//       return course.getEnrollments();
-//    }
-
-    public Student getStudent(int studentId) { return students.get(studentId); }
-    public Course getCourse(String courseCode) { return courses.get(courseCode); }
+    private String convertToUpperCase(String courseCode) {
+        return courseCode.trim().toUpperCase();
+    }
 }

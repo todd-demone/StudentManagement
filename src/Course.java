@@ -47,12 +47,6 @@ public class Course {
         }
     }
 
-//    public Enrollment getEnrollment(Student student) {
-//        return enrollments["student"] == "jack";
-//    }
-
-
-
     @Override
     public String toString() {
         return String.format("%s (%s) - %d students enrolled", courseName, courseCode, enrollments.size());
