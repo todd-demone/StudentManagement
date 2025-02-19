@@ -2,7 +2,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
-public class StudentManagement {
+public class StudentManagementUI {
     private static final Scanner scanner = new Scanner(System.in);
     private static final StudentManager manager = new StudentManager();
 
@@ -17,7 +17,6 @@ public class StudentManagement {
             System.out.println("5 - List a student's courses");
             System.out.println("6 - List a course's students");
             System.out.println("7 - Exit the program");
-            System.out.print("Enter your choice: ");
 
             int choice = readInt("Enter your choice: ");
             System.out.println();
