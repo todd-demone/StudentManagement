@@ -18,7 +18,7 @@ public class StudentManagementUI {
             System.out.println("6 - List a course's students");
             System.out.println("7 - Exit the program");
 
-            int choice = readInt("Enter your choice: ");
+            int choice = readInt("Enter your choice");
             System.out.println();
 
             switch (choice) {
@@ -38,8 +38,8 @@ public class StudentManagementUI {
     }
 
     private static void addCourse() {
-        String courseName = readString("Enter the course name: ");
-        String courseCode = readString("Enter the course code: ");
+        String courseName = readString("Enter the course name");
+        String courseCode = readString("Enter the course code");
 
         try {
             courseCode = courseCode.trim().toUpperCase();
@@ -50,7 +50,7 @@ public class StudentManagementUI {
     }
 
     private static void addStudent() {
-        String name = readString("Enter the student's name: ");
+        String name = readString("Enter the student's name");
         int id = readInt("Enter the student's ID: ");
 
         try {
@@ -61,7 +61,7 @@ public class StudentManagementUI {
     }
 
     private static void enrollStudent() {
-        String courseCode = readString("Enter course code: ");
+        String courseCode = readString("Enter course code");
         int studentId = readInt("Enter student ID: ");
 
         try {
@@ -72,8 +72,8 @@ public class StudentManagementUI {
     }
 
     private static void setGrade() {
-        String courseCode = readString("Enter course code: ");
-        int studentId = readInt("Enter student ID: ");
+        String courseCode = readString("Enter course code");
+        int studentId = readInt("Enter student ID");
 
         try {
             manager.setGrade(courseCode, studentId);
@@ -83,7 +83,7 @@ public class StudentManagementUI {
     }
 
     private static void listCourses() {
-        int studentId = readInt("Enter student ID: ");
+        int studentId = readInt("Enter student ID");
 
         try {
             Student student = manager.getStudent(studentId);
@@ -99,7 +99,7 @@ public class StudentManagementUI {
     }
 
     private static void listStudents() {
-        String courseCode = readString("Enter course code: ");
+        String courseCode = readString("Enter course code");
 
         try {
             Course course = manager.getCourse(courseCode);
@@ -116,7 +116,7 @@ public class StudentManagementUI {
     private static int readInt(String prompt) {
         int result = 0;
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt + ": ");
             try {
                 result = scanner.nextInt();
                 scanner.nextLine();
@@ -135,7 +135,7 @@ public class StudentManagementUI {
     private static String readString(String prompt) {
         String result = "";
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt + ": ");
             try {
                 result = scanner.nextLine();
                 break;
