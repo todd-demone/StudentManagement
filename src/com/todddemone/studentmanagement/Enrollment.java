@@ -1,3 +1,5 @@
+package com.todddemone.studentmanagement;
+
 import java.util.Objects;
 
 public class Enrollment {
@@ -7,8 +9,12 @@ public class Enrollment {
     private int grade;
 
     public Enrollment( Course course, Student student) {
-        Objects.requireNonNull(course, "Course cannot be null.");
-        Objects.requireNonNull(student, "Student cannot be null.");
+        if (course == null) {
+        	throw new IllegalArgumentException("Course cannot be null.");
+        }
+        if (student == null) {
+        	throw new IllegalArgumentException("Student cannot be null.");
+        }
 
         this.course = course;
         this.student = student;
@@ -25,7 +31,7 @@ public class Enrollment {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void addGrade(int grade) {
         this.grade = grade;
     }
 

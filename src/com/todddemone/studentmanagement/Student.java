@@ -1,14 +1,18 @@
+package com.todddemone.studentmanagement;
+
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Objects;
 
-public class Student {
+import java.util.Set;
 
+public class Student implements Identifiable {
+
+	private final Integer id;
     private final String name;
-    private final Integer id;
-    private Set<Enrollment> enrollments;
+    private Set<Enrollment> enrollments = new HashSet<>();
 
-    public Student(String name, Integer id) {
+    public Student(Integer id, String name) {
         Objects.requireNonNull(name, "Student name cannot be null.");
         Objects.requireNonNull(id, "Student ID cannot be null.");
 
@@ -32,12 +36,11 @@ public class Student {
             throw new IllegalArgumentException("Student ID must be exactly 9 digits (e.g., '123456789').");
         }
 
-        this.name = name;
         this.id = id;
-        enrollments = new HashSet<>();
+        this.name = name;
     }
 
-    public int getId() { return id; }
+    public Integer getId() { return id; }
     public String getName() { return name; }
     public Set<Enrollment> getEnrollments() { return new HashSet<>(enrollments); }
 

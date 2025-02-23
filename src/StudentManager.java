@@ -4,12 +4,22 @@ public class StudentManager {
     private final Map<Integer, Student> students = new HashMap<>();
     private final Map<String, Course> courses = new HashMap<>();
 
-    public Student getStudent(int studentId) { return students.get(studentId); }
 
     public Course getCourse(String courseCode) {
         courseCode = convertToUpperCase(courseCode);
         return courses.get(courseCode);
     }
+    
+    public void addCourse(Course course) {
+        if (courses.containsKey(course.getCourseCode())) {
+            throw new IllegalArgumentException("Course with this Code already exists.");
+        }
+
+        courses.put(course.getCourseCode(), course);
+        System.out.println("Course added: " + course.getName());
+    }
+
+    public Student getStudent(int studentId) { return students.get(studentId); }
 
     public void addStudent(Student student) {
         if (students.containsKey(student.getId())) {
@@ -20,16 +30,9 @@ public class StudentManager {
         System.out.println("Student added: " + student.getName());
     }
 
-    public void addCourse(Course course) {
-        if (courses.containsKey(course.getCourseCode())) {
-            throw new IllegalArgumentException("Course with this Code already exists.");
-        }
+    
 
-        courses.put(course.getCourseCode(), course);
-        System.out.println("Course added: " + course.getCourseName());
-    }
-
-    public void enrollStudent(String courseCode, int studentId) {
+    public void addEnrollment(String courseCode, int studentId) {
         courseCode = convertToUpperCase(courseCode);
         Course course = courses.get(courseCode);
         Student student = students.get(studentId);
@@ -42,7 +45,7 @@ public class StudentManager {
         student.addEnrollment(enrollment);
     }
 
-    public void setGrade(String courseCode, int studentId) {
+    public void addGrade(String courseCode, int studentId) {
         courseCode = convertToUpperCase(courseCode);
         Course course = courses.get(courseCode);
         Student student = students.get(studentId);

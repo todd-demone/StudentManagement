@@ -1,42 +1,48 @@
+package com.todddemone.studentmanagement;
 
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Objects;
 
-public class Course {
-    private String courseName;
+public class Course implements Identifiable {
+	private Integer id;
+    private String name;
+    private Teacher teacher;
     private String courseCode;
-    private Set<Enrollment> enrollments;
+    private Set<Enrollment> enrollments = new HashSet<>();
 
-    public Course(String courseName, String courseCode) {
-        Objects.requireNonNull(courseName, "Course name cannot be null.");
+    public Course(Integer id, String name, String courseCode) {
+        Objects.requireNonNull(name, "Course name cannot be null.");
         Objects.requireNonNull(courseCode, "Course code cannot be null.");
 
-        courseName = courseName.trim();
+        name = name.trim();
         courseCode = courseCode.trim().toUpperCase();
 
-        if (courseName.isEmpty()) {
+        if (name.isEmpty()) {
             throw new IllegalArgumentException("Course name cannot be empty.");
         }
         if (courseCode.isEmpty()) {
             throw new IllegalArgumentException("Course code cannot be empty.");
         }
 
-        if (courseName.length() > 100) {
+        if (name.length() > 100) {
             throw new IllegalArgumentException("Course name must be 100 characters or less.");
         }
         if (!courseCode.matches("^[A-Za-z]{3}\\d{3}$")) {
             throw new IllegalArgumentException("Course code must be exactly 6 characters; first 3 letters, last 3 digits (e.g., CSC101).");
         }
-
-        this.courseName = courseName;
+        
+        this.id = id;
+        this.name = name;
         this.courseCode = courseCode;
 
         enrollments = new HashSet<>();
     }
 
+    public Integer getId() { return id; }
+    public String getName() { return name; }
+    public Teacher getTeacher() { return teacher; }
     public String getCourseCode() { return courseCode; }
-    public String getCourseName() { return courseName; }
     public Set<Enrollment> getEnrollments() {
         return new HashSet<>(enrollments);
     }
@@ -49,6 +55,6 @@ public class Course {
 
     @Override
     public String toString() {
-        return String.format("%s (%s) - %d students enrolled", courseName, courseCode, enrollments.size());
+        return String.format("%s (%s) - %d students enrolled", name, courseCode, enrollments.size());
     }
 }
