@@ -1,11 +1,8 @@
 package com.todddemone.studentmanagement;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.Set;
 
 public class MainUI {
-    private static final Scanner scanner = new Scanner(System.in);
     private static final Repository<Course> courseRepository = new Repository<>();
     private static final Repository<Student> studentRepository = new Repository<>();
     private static final Repository<Teacher> teacherRepository = new Repository<>();
@@ -24,7 +21,7 @@ public class MainUI {
             System.out.println("7 - List a course's students");
             System.out.println("8 - Exit the program");
 
-            int choice = readInt("Enter your choice");
+            int choice = UiInputUtils.readInt("Enter your choice");
             System.out.println();
 
             switch (choice) {
@@ -45,20 +42,22 @@ public class MainUI {
     }
     
     private static void addCourse() {
-    	Integer id = readInt("Enter the course ID");
-        String name = readString("Enter the course name");
-        String courseCode = readString("Enter the course code").trim().toUpperCase();
+    	Integer 	id = UiInputUtils.readInt("Enter the course ID");
+        String name = UiInputUtils.readString("Enter the course name");
+        Integer teacherId = UiInputUtils.readInt("Enter teacher ID");
+        Teacher teacher = teacherRepository.get(teacherId);
+        String courseCode = UiInputUtils.readString("Enter the course code").trim().toUpperCase();
 
         try {
-            courseRepository.add(new Course(id, name, courseCode));
+            courseRepository.add(new Course(id, name, teacher, courseCode));
         } catch(IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private static void addStudent() {
-    	int id = readInt("Enter the student ID");
-        String name = readString("Enter the student name");
+    	int id = UiInputUtils.readInt("Enter the student ID");
+        String name = UiInputUtils.readString("Enter the student name");
 
         try {
             studentRepository.add(new Student(id, name));
@@ -68,8 +67,8 @@ public class MainUI {
     }
     
     private static void addTeacher() {
-    	int id = readInt("Enter the teacher ID");
-        String name = readString("Enter the teacher name");
+    	int id = UiInputUtils.readInt("Enter the teacher ID");
+        String name = UiInputUtils.readString("Enter the teacher name");
 
         try {
             teacherRepository.add(new Teacher(id, name));
@@ -79,8 +78,8 @@ public class MainUI {
     }
 
     private static void addEnrollment() {
-        int courseId = readInt("Enter the course ID");
-        int studentId = readInt("Enter the student ID");
+        int courseId = UiInputUtils.readInt("Enter the course ID");
+        int studentId = UiInputUtils.readInt("Enter the student ID");
 
         try {
         	Course course = courseRepository.get(courseId);
@@ -92,9 +91,9 @@ public class MainUI {
     }
 
     private static void addGrade() {
-        int courseId = readInt("Enter the course ID");
-        int studentId = readInt("Enter the student ID");
-        int grade = readInt("Enter the grade");
+        int courseId = UiInputUtils.readInt("Enter the course ID");
+        int studentId = UiInputUtils.readInt("Enter the student ID");
+        int grade = UiInputUtils.readInt("Enter the grade");
 
         try {
             Enrollment enrollment = enrollmentRepository.getEnrollment(courseId, studentId);
@@ -105,7 +104,7 @@ public class MainUI {
     }
 
     private static void listCoursesOfStudent() {
-        int studentId = readInt("Enter student ID");
+        int studentId = UiInputUtils.readInt("Enter student ID");
 
         try {
             Student student = studentRepository.get(studentId);
@@ -121,7 +120,7 @@ public class MainUI {
     }
 
     private static void listStudentsOfCourse() {
-        int courseId = readInt("Enter course ID");
+        int courseId = UiInputUtils.readInt("Enter course ID");
 
         try {
             Course course = courseRepository.get(courseId);
@@ -135,37 +134,4 @@ public class MainUI {
         }
     }
 
-    private static int readInt(String prompt) {
-        int result = 0;
-        while (true) {
-            System.out.print(prompt + ": ");
-            try {
-                result = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter an integer.");
-                // If invalid input was placed in the input buffer by scanner.nextInt() (see above), we need
-                // scanner.nextLine() to discard that input from the buffer. Otherwise, the input stays there and the
-                // loop keeps seeing invalid input and keeps looping indefinitely.
-                scanner.nextLine();
-            }
-        }
-        return result;
-    }
-
-    private static String readString(String prompt) {
-        String result = "";
-        while (true) {
-            System.out.print(prompt + ": ");
-            try {
-                result = scanner.nextLine();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a string.");
-                scanner.nextLine();
-            }
-        }
-        return result;
-    }
 }

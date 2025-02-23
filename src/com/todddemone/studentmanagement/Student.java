@@ -2,42 +2,25 @@ package com.todddemone.studentmanagement;
 
 import java.util.Set;
 import java.util.HashSet;
-import java.util.Objects;
-
-import java.util.Set;
 
 public class Student implements Identifiable {
 
-	private final Integer id;
-    private final String name;
+	private Integer id;
+    private String name;
     private Set<Enrollment> enrollments = new HashSet<>();
-
+    private final int NAME_MAX_CHARACTERS = 50;
+    
     public Student(Integer id, String name) {
-        Objects.requireNonNull(name, "Student name cannot be null.");
-        Objects.requireNonNull(id, "Student ID cannot be null.");
-
-        name = name.trim();
-
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("Student name cannot be empty.");
-        }
-        if (name.length() > 50) {
-            throw new IllegalArgumentException("Student name must be 50 characters or less.");
-        }
-        if (!name.matches("^[A-Za-z'\\- ]+$")) {
-            throw new IllegalArgumentException("Student name can only contain letters, spaces, hyphens and apostrophes.");
-        }
-
-        if (id <= 0) {
-            throw new IllegalArgumentException("Student ID must be a positive number.");
-        }
-        String idString = String.valueOf(id);
-        if (!idString.matches("^\\d{9}$")) {
-            throw new IllegalArgumentException("Student ID must be exactly 9 digits (e.g., '123456789').");
-        }
-
-        this.id = id;
-        this.name = name;
+    	// Student ID validation
+    	this.id = ValidationUtils.requireNonNull(id, "Student ID");
+    	this.id = ValidationUtils.requireNonNegative(this.id, "Student ID");
+    	
+        // Student name validation
+    	this.name = ValidationUtils.requireNonNull(name, "Student name");
+    	this.name = ValidationUtils.requireNonEmpty(this.name, "Student name");
+    	this.name = this.name.trim();
+    	this.name = ValidationUtils.requireCharacterLimit(this.name, NAME_MAX_CHARACTERS, "Course name");
+    	this.name = ValidationUtils.limitCharCategories(this.name);
     }
 
     public Integer getId() { return id; }

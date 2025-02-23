@@ -2,7 +2,6 @@ package com.todddemone.studentmanagement;
 
 import java.util.Set;
 import java.util.HashSet;
-import java.util.Objects;
 
 public class Course implements Identifiable {
 	private Integer id;
@@ -10,42 +9,38 @@ public class Course implements Identifiable {
     private Teacher teacher;
     private String courseCode;
     private Set<Enrollment> enrollments = new HashSet<>();
+    private final int NAME_MAX_CHARACTERS = 100;
 
-    public Course(Integer id, String name, String courseCode) {
-        Objects.requireNonNull(name, "Course name cannot be null.");
-        Objects.requireNonNull(courseCode, "Course code cannot be null.");
-
-        name = name.trim();
-        courseCode = courseCode.trim().toUpperCase();
-
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("Course name cannot be empty.");
-        }
-        if (courseCode.isEmpty()) {
-            throw new IllegalArgumentException("Course code cannot be empty.");
-        }
-
-        if (name.length() > 100) {
-            throw new IllegalArgumentException("Course name must be 100 characters or less.");
-        }
+    public Course(Integer id, String name, Teacher teacher, String courseCode) {
+    	// Course ID validation
+    	this.id = ValidationUtils.requireNonNull(id, "Course ID");
+    	this.id = ValidationUtils.requireNonNegative(this.id, "Course id");
+    	
+    	// Course name validation
+    	this.name = ValidationUtils.requireNonNull(name, "Course name");
+    	this.name = ValidationUtils.requireNonEmpty(this.name, "Course name");
+    	this.name = this.name.trim();
+    	this.name = ValidationUtils.requireCharacterLimit(this.name, NAME_MAX_CHARACTERS, "Course name");
+    	this.name = ValidationUtils.limitCharCategories(this.name);
+    	
+    	// Teacher validation
+    	this.teacher = ValidationUtils.requireNonNull(teacher, "Teacher");
+    	
+    	// Course code validation
+    	this.courseCode = ValidationUtils.requireNonNull(courseCode, "Course code");
+    	this.courseCode = ValidationUtils.requireNonEmpty(this.courseCode, "Course code");
+        this.courseCode = this.courseCode.trim().toUpperCase();
+       
         if (!courseCode.matches("^[A-Za-z]{3}\\d{3}$")) {
             throw new IllegalArgumentException("Course code must be exactly 6 characters; first 3 letters, last 3 digits (e.g., CSC101).");
         }
-        
-        this.id = id;
-        this.name = name;
-        this.courseCode = courseCode;
-
-        enrollments = new HashSet<>();
     }
 
     public Integer getId() { return id; }
     public String getName() { return name; }
     public Teacher getTeacher() { return teacher; }
     public String getCourseCode() { return courseCode; }
-    public Set<Enrollment> getEnrollments() {
-        return new HashSet<>(enrollments);
-    }
+    public Set<Enrollment> getEnrollments() { return new HashSet<>(enrollments); }
 
     public void addEnrollment(Enrollment enrollment) {
         if (!enrollments.add(enrollment)) {

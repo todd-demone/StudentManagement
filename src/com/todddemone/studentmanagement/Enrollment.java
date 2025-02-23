@@ -9,27 +9,13 @@ public class Enrollment {
     private int grade;
 
     public Enrollment( Course course, Student student) {
-        if (course == null) {
-        	throw new IllegalArgumentException("Course cannot be null.");
-        }
-        if (student == null) {
-        	throw new IllegalArgumentException("Student cannot be null.");
-        }
-
-        this.course = course;
-        this.student = student;
+        this.course = ValidationUtils.requireNonNull(course, "Course");
+        this.student = ValidationUtils.requireNonNull(student, "Student");
     }
 
-
-    public Course getCourse() {
-        return course;
-    }
-    public Student getStudent() {
-        return student;
-    }
-    public int getGrade() {
-        return grade;
-    }
+    public Course getCourse() { return course; }
+    public Student getStudent() { return student; }
+    public int getGrade() { return grade; }
 
     public void addGrade(int grade) {
         this.grade = grade;
