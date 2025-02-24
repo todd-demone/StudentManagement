@@ -1,7 +1,8 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.repository;
 
 import java.util.Map;
 import java.util.HashMap;
+import com.todddemone.studentapp.domain.Identifiable;
 
 public class Repository<T extends Identifiable> implements CrudRepository<T> {
 	private Map<Integer, T> records = new HashMap<>();

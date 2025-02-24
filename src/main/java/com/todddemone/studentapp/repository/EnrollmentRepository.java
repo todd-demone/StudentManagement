@@ -1,7 +1,8 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.repository;
 
 import java.util.Map;
 import java.util.HashMap;
+import com.todddemone.studentapp.domain.*;
 
 public class EnrollmentRepository {
 	private Map<EnrollmentKey, Enrollment> enrollments = new HashMap<>();

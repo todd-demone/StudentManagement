@@ -1,7 +1,8 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.domain;
 
 import java.util.Set;
 import java.util.HashSet;
+import com.todddemone.studentapp.utils.*;
 
 public class Student implements Identifiable {
 

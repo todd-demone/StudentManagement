@@ -1,6 +1,9 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.ui;
 
 import java.util.Set;
+import com.todddemone.studentapp.repository.*;
+import com.todddemone.studentapp.domain.*;
+import com.todddemone.studentapp.utils.*;
 
 public class MainUI {
     private static final Repository<Course> courseRepository = new Repository<>();

@@ -1,4 +1,4 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.repository;
 
 import java.util.Objects;
 

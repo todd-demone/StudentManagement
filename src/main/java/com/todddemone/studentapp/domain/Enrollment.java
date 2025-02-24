@@ -1,6 +1,7 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.domain;
 
 import java.util.Objects;
+import com.todddemone.studentapp.utils.*;
 
 public class Enrollment {
 

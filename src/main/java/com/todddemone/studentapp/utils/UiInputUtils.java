@@ -1,4 +1,4 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.utils;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;

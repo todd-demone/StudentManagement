@@ -1,4 +1,4 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.repository;
 
 public interface CrudRepository<T> {
 	T get(Integer id);

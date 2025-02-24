@@ -1,4 +1,4 @@
-package com.todddemone.studentmanagement;
+package com.todddemone.studentapp.domain;
 
 public interface Identifiable {
 	Integer getId();
