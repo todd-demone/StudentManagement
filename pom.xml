@@ -72,7 +72,7 @@
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.5.0</version> <!-- You can update this to the latest version -->
+            <version>3.5.0</version>
             <executions>
                 <execution>
                     <goals>
@@ -81,7 +81,7 @@
                 </execution>
             </executions>
             <configuration>
-                <mainClass>com.todddemone.studentapp.ui.MainUI</mainClass> <!-- your main class -->
+                <mainClass>com.todddemone.studentapp.ui.MainUI</mainClass>
             </configuration>
         </plugin>
       </plugins>
