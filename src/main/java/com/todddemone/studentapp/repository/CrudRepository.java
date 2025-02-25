@@ -1,9 +1,14 @@
 package com.todddemone.studentapp.repository;
 
+import java.util.Set;
+
 public interface CrudRepository<T> {
-	T get(Integer id);
 
 	void add(T item);
 
+	T get(Integer id);
+
 	void remove(Integer id);
+
+	Set<T> getAll();
 }

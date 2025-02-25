@@ -2,26 +2,37 @@ package com.todddemone.studentapp.repository;
 
 import java.util.Map;
 import java.util.HashMap;
-import com.todddemone.studentapp.domain.*;
+import java.util.Set;
+import java.util.stream.Collectors;
+import com.todddemone.studentapp.domain.Enrollment;
 
 public class EnrollmentRepository {
-	private Map<EnrollmentKey, Enrollment> enrollments = new HashMap<>();
+	private Map<EnrollmentKey, Enrollment> records = new HashMap<>();
 
-	public void addEnrollment(Enrollment enrollment) {
-		EnrollmentKey key = new EnrollmentKey(
-				enrollment.getStudent().getId(),
-				enrollment.getCourse().getId());
-		enrollments.put(key, enrollment);
-		enrollment.getCourse().addEnrollment(enrollment);
-		enrollment.getStudent().addEnrollment(enrollment);
+	public void add(Enrollment enrollment) {
+		EnrollmentKey key = new EnrollmentKey(enrollment.getStudent().getId(), enrollment.getCourse().getId());
+		records.put(key, enrollment);
 	}
 
-	public Enrollment getEnrollment(Integer courseId, Integer studentId) {
-		return enrollments.get(new EnrollmentKey(courseId, studentId));
+	public Enrollment get(Integer courseId, Integer studentId) {
+		return records.get(new EnrollmentKey(courseId, studentId));
 	}
 
-	public Map<EnrollmentKey, Enrollment> getEnrollments() {
-		return new HashMap<>(enrollments);
+	public void remove(Integer courseId, Integer studentId) {
+		records.remove(new EnrollmentKey(courseId, studentId));
 	}
 
+	public Map<EnrollmentKey, Enrollment> getAll() {
+		return new HashMap<>(records);
+	}
+
+	public Set<Enrollment> getByStudentId(Integer studentId) {
+		return records.values().stream().filter(e -> e.getStudent().getId().equals(studentId))
+				.collect(Collectors.toSet());
+	}
+
+	public Set<Enrollment> getByCourseId(Integer courseId) {
+		return records.values().stream().filter(enrollment -> enrollment.getCourse().getId().equals(courseId))
+				.collect(Collectors.toSet());
+	}
 }

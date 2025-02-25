@@ -1,7 +1,7 @@
 package com.todddemone.studentapp.domain;
 
 import java.util.Objects;
-import com.todddemone.studentapp.utils.*;
+import com.todddemone.studentapp.utils.ValidationUtils;
 
 public class Enrollment {
 
@@ -26,7 +26,7 @@ public class Enrollment {
         return grade;
     }
 
-    public void addGrade(int grade) {
+    public void setGrade(int grade) {
         this.grade = grade;
     }
 

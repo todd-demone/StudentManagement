@@ -2,7 +2,7 @@ package com.todddemone.studentapp.domain;
 
 import java.util.Set;
 import java.util.HashSet;
-import com.todddemone.studentapp.utils.*;
+import com.todddemone.studentapp.utils.ValidationUtils;
 
 public class Teacher implements Identifiable {
 	private Integer id;
@@ -11,11 +11,11 @@ public class Teacher implements Identifiable {
 	private final int NAME_MAX_CHARACTERS = 50;
 
 	public Teacher(Integer id, String name) {
-		// Teacher ID validation
+		// id validation
 		this.id = ValidationUtils.requireNonNull(id, "Teacher ID");
 		this.id = ValidationUtils.requireNonNegative(this.id, "Teacher ID");
 
-		// Teacher name validation
+		// name validation
 		this.name = ValidationUtils.requireNonNull(name, "Teacher name");
 		this.name = ValidationUtils.requireNonEmpty(this.name, "Teacher Name");
 		this.name.trim();
