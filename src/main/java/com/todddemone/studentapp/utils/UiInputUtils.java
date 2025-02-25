@@ -4,8 +4,9 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public final class UiInputUtils {
-	
-	private UiInputUtils() {}
+
+    private UiInputUtils() {
+    }
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -19,8 +20,10 @@ public final class UiInputUtils {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer.");
-                // If invalid input was placed in the input buffer by scanner.nextInt() (see above), we need
-                // scanner.nextLine() to discard that input from the buffer. Otherwise, the input stays there and the
+                // If invalid input was placed in the input buffer by scanner.nextInt() (see
+                // above), we need
+                // scanner.nextLine() to discard that input from the buffer. Otherwise, the
+                // input stays there and the
                 // loop keeps seeing invalid input and keeps looping indefinitely.
                 scanner.nextLine();
             }

@@ -43,9 +43,9 @@ public class MainUI {
             }
         }
     }
-    
+
     private static void addCourse() {
-    	Integer 	id = UiInputUtils.readInt("Enter the course ID");
+        Integer id = UiInputUtils.readInt("Enter the course ID");
         String name = UiInputUtils.readString("Enter the course name");
         Integer teacherId = UiInputUtils.readInt("Enter teacher ID");
         Teacher teacher = teacherRepository.get(teacherId);
@@ -53,29 +53,29 @@ public class MainUI {
 
         try {
             courseRepository.add(new Course(id, name, teacher, courseCode));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private static void addStudent() {
-    	int id = UiInputUtils.readInt("Enter the student ID");
+        int id = UiInputUtils.readInt("Enter the student ID");
         String name = UiInputUtils.readString("Enter the student name");
 
         try {
             studentRepository.add(new Student(id, name));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
-    
+
     private static void addTeacher() {
-    	int id = UiInputUtils.readInt("Enter the teacher ID");
+        int id = UiInputUtils.readInt("Enter the teacher ID");
         String name = UiInputUtils.readString("Enter the teacher name");
 
         try {
             teacherRepository.add(new Teacher(id, name));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -85,10 +85,10 @@ public class MainUI {
         int studentId = UiInputUtils.readInt("Enter the student ID");
 
         try {
-        	Course course = courseRepository.get(courseId);
-        	Student student = studentRepository.get(studentId);
+            Course course = courseRepository.get(courseId);
+            Student student = studentRepository.get(studentId);
             enrollmentRepository.addEnrollment(new Enrollment(course, student));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -101,7 +101,7 @@ public class MainUI {
         try {
             Enrollment enrollment = enrollmentRepository.getEnrollment(courseId, studentId);
             enrollment.addGrade(grade);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -116,7 +116,7 @@ public class MainUI {
             for (Enrollment enrollment : enrollments) {
                 System.out.println("- " + enrollment.getCourse());
             }
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
 
@@ -132,7 +132,7 @@ public class MainUI {
             for (Enrollment enrollment : enrollments) {
                 System.out.println("- " + enrollment.getStudent());
             }
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
