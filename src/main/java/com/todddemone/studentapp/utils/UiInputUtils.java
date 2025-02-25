@@ -3,14 +3,14 @@ package com.todddemone.studentapp.utils;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public final class UiInputUtils {
+public class UiInputUtils {
 
-    private UiInputUtils() {
+    public UiInputUtils() {
     }
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static int readInt(String prompt) {
+    public int readInt(String prompt) {
         int result = 0;
         while (true) {
             System.out.print(prompt + ": ");
@@ -31,7 +31,7 @@ public final class UiInputUtils {
         return result;
     }
 
-    public static String readString(String prompt) {
+    public String readString(String prompt) {
         String result = "";
         while (true) {
             System.out.print(prompt + ": ");
