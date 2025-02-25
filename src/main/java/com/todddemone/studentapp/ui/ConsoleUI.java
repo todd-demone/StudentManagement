@@ -53,6 +53,7 @@ public class ConsoleUI {
             }
         }
     }
+    
 
     private void addCourse() {
         Integer id = uiInputUtils.readInt("Enter the course ID");

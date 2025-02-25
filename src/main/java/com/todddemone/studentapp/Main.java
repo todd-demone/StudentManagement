@@ -22,6 +22,7 @@ public class Main {
         CourseService courseService = new CourseService(courseRepository, teacherRepository, enrollmentRepository);
         StudentService studentService = new StudentService(studentRepository, enrollmentRepository);
         TeacherService teacherService = new TeacherService(teacherRepository);
+<<<<<<< HEAD
         EnrollmentService enrollmentService = new EnrollmentService(enrollmentRepository, courseRepository,
                 studentRepository);
 
@@ -30,5 +31,15 @@ public class Main {
         ConsoleUI consoleUI = new ConsoleUI(courseService, studentService, teacherService, enrollmentService,
                 uiInputUtils);
         consoleUI.run();
+=======
+        EnrollmentService enrollmentService = new EnrollmentService(enrollmentRepository, courseRepository, studentRepository);
+
+        UiInputUtils uiInputUtils = new UiInputUtils();
+
+        ConsoleUI consoleUI = new ConsoleUI(courseService, studentService, teacherService, enrollmentService, uiInputUtils);
+        consoleUI.run();
+
+
+>>>>>>> 856eecfdeb404a3a39e9fd793e27d1ff091ea11f
     }
 }
