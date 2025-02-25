@@ -1,25 +1,27 @@
 package com.todddemone.studentapp.ui;
 
 import java.util.Set;
-import com.todddemone.studentapp.repository.*;
 import com.todddemone.studentapp.service.*;
 import com.todddemone.studentapp.domain.*;
 import com.todddemone.studentapp.utils.UiInputUtils;
 
-public class MainUI {
-    private static final Repository<Course> courseRepository = new Repository<>();
-    private static final Repository<Student> studentRepository = new Repository<>();
-    private static final Repository<Teacher> teacherRepository = new Repository<>();
-    private static final EnrollmentRepository enrollmentRepository = new EnrollmentRepository();
+public class ConsoleUI {
+    private final CourseService courseService;
+    private final StudentService studentService;
+    private final TeacherService teacherService;
+    private final EnrollmentService enrollmentService;
+    private final UiInputUtils uiInputUtils;
 
-    private static final CourseService courseService = new CourseService(courseRepository, teacherRepository,
-            enrollmentRepository);
-    private static final StudentService studentService = new StudentService(studentRepository, enrollmentRepository);
-    private static final TeacherService teacherService = new TeacherService(teacherRepository);
-    private static final EnrollmentService enrollmentService = new EnrollmentService(enrollmentRepository,
-            courseRepository, studentRepository);
+    public ConsoleUI(CourseService courseService, StudentService studentService, TeacherService teacherService,
+            EnrollmentService enrollmentService, UiInputUtils uiInputUtils) {
+        this.courseService = courseService;
+        this.studentService = studentService;
+        this.teacherService = teacherService;
+        this.enrollmentService = enrollmentService;
+        this.uiInputUtils = uiInputUtils;
+    }
 
-    public static void main(String[] args) {
+    public void run() {
         while (true) {
             System.out.println();
             System.out.println("Student Management System");
@@ -32,7 +34,7 @@ public class MainUI {
             System.out.println("7 - List a course's enrollments");
             System.out.println("8 - Exit the program");
 
-            int choice = UiInputUtils.readInt("Enter your choice");
+            int choice = uiInputUtils.readInt("Enter your choice");
             System.out.println();
 
             switch (choice) {
@@ -51,12 +53,13 @@ public class MainUI {
             }
         }
     }
+    
 
-    private static void addCourse() {
-        Integer id = UiInputUtils.readInt("Enter the course ID");
-        String name = UiInputUtils.readString("Enter the course name");
-        Integer teacherId = UiInputUtils.readInt("Enter teacher ID");
-        String courseCode = UiInputUtils.readString("Enter the course code").trim().toUpperCase();
+    private void addCourse() {
+        Integer id = uiInputUtils.readInt("Enter the course ID");
+        String name = uiInputUtils.readString("Enter the course name");
+        Integer teacherId = uiInputUtils.readInt("Enter teacher ID");
+        String courseCode = uiInputUtils.readString("Enter the course code").trim().toUpperCase();
 
         try {
             courseService.add(id, name, teacherId, courseCode);
@@ -66,9 +69,9 @@ public class MainUI {
         }
     }
 
-    private static void addStudent() {
-        int id = UiInputUtils.readInt("Enter the student ID");
-        String name = UiInputUtils.readString("Enter the student name");
+    private void addStudent() {
+        int id = uiInputUtils.readInt("Enter the student ID");
+        String name = uiInputUtils.readString("Enter the student name");
 
         try {
             studentService.add(id, name);
@@ -77,9 +80,9 @@ public class MainUI {
         }
     }
 
-    private static void addTeacher() {
-        int id = UiInputUtils.readInt("Enter the teacher ID");
-        String name = UiInputUtils.readString("Enter the teacher name");
+    private void addTeacher() {
+        int id = uiInputUtils.readInt("Enter the teacher ID");
+        String name = uiInputUtils.readString("Enter the teacher name");
 
         try {
             teacherService.add(id, name);
@@ -88,9 +91,9 @@ public class MainUI {
         }
     }
 
-    private static void addEnrollment() {
-        int courseId = UiInputUtils.readInt("Enter the course ID");
-        int studentId = UiInputUtils.readInt("Enter the student ID");
+    private void addEnrollment() {
+        int courseId = uiInputUtils.readInt("Enter the course ID");
+        int studentId = uiInputUtils.readInt("Enter the student ID");
 
         try {
             enrollmentService.add(courseId, studentId);
@@ -99,10 +102,10 @@ public class MainUI {
         }
     }
 
-    private static void addGrade() {
-        int courseId = UiInputUtils.readInt("Enter the course ID");
-        int studentId = UiInputUtils.readInt("Enter the student ID");
-        int grade = UiInputUtils.readInt("Enter the grade");
+    private void addGrade() {
+        int courseId = uiInputUtils.readInt("Enter the course ID");
+        int studentId = uiInputUtils.readInt("Enter the student ID");
+        int grade = uiInputUtils.readInt("Enter the grade");
 
         try {
             enrollmentService.addGrade(courseId, studentId, grade);
@@ -111,8 +114,8 @@ public class MainUI {
         }
     }
 
-    private static void listStudentEnrollments() {
-        int studentId = UiInputUtils.readInt("Enter student ID");
+    private void listStudentEnrollments() {
+        int studentId = uiInputUtils.readInt("Enter student ID");
 
         try {
             Set<Enrollment> enrollments = studentService.getEnrollments(studentId);
@@ -126,8 +129,8 @@ public class MainUI {
 
     }
 
-    private static void listCourseEnrollments() {
-        int courseId = UiInputUtils.readInt("Enter course ID");
+    private void listCourseEnrollments() {
+        int courseId = uiInputUtils.readInt("Enter course ID");
 
         try {
             Set<Enrollment> enrollments = courseService.getEnrollments(courseId);
