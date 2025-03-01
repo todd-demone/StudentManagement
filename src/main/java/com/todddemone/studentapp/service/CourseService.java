@@ -4,26 +4,49 @@ import java.util.Set;
 import com.todddemone.studentapp.repository.Repository;
 import com.todddemone.studentapp.repository.EnrollmentRepository;
 import com.todddemone.studentapp.domain.Course;
-import com.todddemone.studentapp.domain.Teacher;
 import com.todddemone.studentapp.domain.Enrollment;
 
 public class CourseService {
 
     private final Repository<Course> courseRepository;
-    private final Repository<Teacher> teacherRepository;
     private final EnrollmentRepository enrollmentRepository;
 
-    public CourseService(Repository<Course> courseRepository, Repository<Teacher> teacherRepository,
-            EnrollmentRepository enrollmentRepository) {
+    public CourseService(Repository<Course> courseRepository, EnrollmentRepository enrollmentRepository) {
         this.courseRepository = courseRepository;
-        this.teacherRepository = teacherRepository;
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    public void add(Integer id, String name, Integer teacherId, String courseCode) {
+    public void add(String name, String courseCode) {
         System.out.println("Adding a course");
-        Teacher teacher = teacherRepository.get(teacherId);
-        courseRepository.add(new Course(id, name, teacher, courseCode));
+        Course course = new Course(name, courseCode);
+        courseRepository.add(course);
+    }
+
+    public void remove(Integer id) {
+        System.out.println("Removing course with ID " + id + "...");
+        courseRepository.remove(id);
+    }
+
+    public void update(Integer id, String name, int teacherId, String courseCode) {
+        System.out.println("Updating course with ID " + id + "...");
+        Course course = courseRepository.get(id);
+        if (course != null) {
+            course.setName(name);
+            course.setTeacherId(teacherId);
+            course.setCourseCode(courseCode);
+        } else {
+            throw new IllegalArgumentException("Course not found for the given ID.");
+        }
+    }
+
+    public void addTeacher(Integer courseId, Integer teacherId) {
+        System.out.println("Adding teacher with ID " + teacherId + " to course with ID " + courseId + "...");
+        Course course = courseRepository.get(courseId);
+        if (course != null) {
+            course.setTeacherId(teacherId);
+        } else {
+            throw new IllegalArgumentException("Course not found for the given ID.");
+        }
     }
 
     public Set<Enrollment> getEnrollments(Integer courseId) {

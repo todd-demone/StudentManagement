@@ -10,10 +10,11 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    public void add(Integer id, String name) {
-        System.out.println("Adding a teacher...");
-        teacherRepository.add(new Teacher(id, name));
+    public void add(String name) {
+        Teacher teacher = new Teacher(name);
+        teacherRepository.add(teacher);
     }
+
     public Teacher get(Integer id) {
         return teacherRepository.get(id);
     }

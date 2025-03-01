@@ -7,32 +7,31 @@ import java.util.stream.Collectors;
 import com.todddemone.studentapp.domain.Enrollment;
 
 public class EnrollmentRepository {
-	private Map<EnrollmentKey, Enrollment> records = new HashMap<>();
+	private Map<Integer, Enrollment> records = new HashMap<>();
 
 	public void add(Enrollment enrollment) {
-		EnrollmentKey key = new EnrollmentKey(enrollment.getStudent().getId(), enrollment.getCourse().getId());
-		records.put(key, enrollment);
+		records.put(enrollment.getId(), enrollment);
 	}
 
-	public Enrollment get(Integer courseId, Integer studentId) {
-		return records.get(new EnrollmentKey(courseId, studentId));
+	public Enrollment get(Integer id) {
+		return records.get(id);
 	}
 
-	public void remove(Integer courseId, Integer studentId) {
-		records.remove(new EnrollmentKey(courseId, studentId));
+	public void remove(Integer id) {
+		records.remove(id);
 	}
 
-	public Map<EnrollmentKey, Enrollment> getAll() {
+	public Map<Integer, Enrollment> getAll() {
 		return new HashMap<>(records);
 	}
 
 	public Set<Enrollment> getByStudentId(Integer studentId) {
-		return records.values().stream().filter(e -> e.getStudent().getId().equals(studentId))
+		return records.values().stream().filter(e -> Integer.valueOf(e.getStudentId()).equals(studentId))
 				.collect(Collectors.toSet());
 	}
 
 	public Set<Enrollment> getByCourseId(Integer courseId) {
-		return records.values().stream().filter(enrollment -> enrollment.getCourse().getId().equals(courseId))
+		return records.values().stream().filter(e -> Integer.valueOf(e.getCourseId()).equals(courseId))
 				.collect(Collectors.toSet());
 	}
 }

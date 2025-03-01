@@ -15,14 +15,13 @@ public class StudentService {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    public void add(Integer id, String name) {
-        System.out.println("Adding a student...");
-        studentRepository.add(new Student(id, name));
+    public void add(String name) {
+        Student student = new Student(name);
+        studentRepository.add(student);
     }
 
     public Set<Enrollment> getEnrollments(Integer studentId) {
         System.out.println("Getting enrollments for student ID " + studentId + "...");
         return enrollmentRepository.getByStudentId(studentId);
-
     }
 }
